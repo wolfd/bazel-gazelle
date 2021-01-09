@@ -514,7 +514,10 @@ func (ls *listSquasher) list() *bzl.ListExpr {
 		jExpr, _ := simpleValueFromExpr(sortedExprs[j])
 
 		// call expressions after plain strings and then lexical order
-		return (iExpr.symbol < jExpr.symbol) && (iExpr.str < jExpr.str)
+		if iExpr.symbol < jExpr.symbol {
+			return true
+		}
+		return iExpr.str < jExpr.str
 	})
 	return &bzl.ListExpr{List: sortedExprs}
 }
